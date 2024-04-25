@@ -1,10 +1,52 @@
 'use server';
+import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { User } from '@/app/lib/definitions';
+import bcrypt from 'bcrypt';
+
+export async function createUser(prevState: State, formData: FormData) {
+  // Extract user data from the FormData object
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  try {
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert user into the database with hashed password
+    await sql`
+      INSERT INTO users (name, email, password)
+      VALUES (${name}, ${email}, ${hashedPassword})
+    `;
+
+    // Redirect and revalidate path
+    revalidatePath('/dashboard');
+    redirect('/dashboard');
+
+    // Return success message or user data
+    return {
+      message: 'User created successfully.',
+      user: {
+        name,
+        email,
+        // Omit password for security reasons
+      },
+    };
+  } catch (error) {
+    console.error('Database Error: Failed to create user', error);
+    // Return error message
+    return {
+      message: 'Database Error: Failed to create user.',
+    };
+  }
+}
+
 
 export async function authenticate(
   prevState: string | undefined,
@@ -24,6 +66,9 @@ export async function authenticate(
     throw error;
   }
 }
+
+
+
 const FormSchema = z.object({
   id: z.string(),
   customerId: z.string({
@@ -39,6 +84,8 @@ const FormSchema = z.object({
 
   date: z.string(),
 });
+
+
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 export type State = {
