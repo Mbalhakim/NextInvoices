@@ -8,7 +8,7 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const userEmail = process.env.NEXT_PUBLIC_SPECIFIC_USER_EMAIL; 
+      const userEmail = "user@test.com"
       // Check if the user is logged in and has the specified user ID
       const isSpecificUser = auth?.user?.email === userEmail;
     
