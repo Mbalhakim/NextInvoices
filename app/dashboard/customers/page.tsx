@@ -1,30 +1,22 @@
-// pages/customers.tsx
-'use client';
-import { useEffect, useState } from 'react';
 
-export default function CustomersPage() {
-  const [customers, setCustomers] = useState([]);
+import Search from '@/app/ui/search';
+import Table from '@/app/ui/customers/table';
+import { lusitana } from '@/app/ui/fonts';
+import { fetchAllCustomers } from '@/app/lib/data';
+export default async function Page() {
 
-  useEffect(() => {
-    async function fetchCustomers() {
-      try {
-        const response = await fetch('/api/customers');
-        const data = await response.json();
-        setCustomers(data);
-      } catch (error) {
-        console.error('Error fetching customers:', error);
-      }
-    }
-
-    fetchCustomers();
-  }, []);
-
+  
+    const customers = await fetchAllCustomers();
   return (
-    <div>
-      <h1>Customers Page</h1>
-      <pre>
-        {JSON.stringify(customers, null, 2)}
-      </pre>
+    <div className="w-full">
+      <div className="flex w-full items-center justify-between">
+        <h1 className={`${lusitana.className} text-2xl`}>Customers</h1>
+      </div>
+     
+        <Table customers = {customers}  />
+      
+    
+      
     </div>
   );
 }

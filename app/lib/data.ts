@@ -31,9 +31,9 @@ export async function fetchAllCustomers() {
       ORDER BY customers.name ASC
     `;
 
-    const customers = data.rows
+    const customers = data.rows;
 
-    console.log('All Customers: in data.ts', customers); // Add this debug log
+
 
     return customers;
   } catch (err) {
@@ -56,7 +56,7 @@ export async function fetchRevenue() {
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+
 
     return data.rows;
   } catch (error) {
