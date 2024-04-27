@@ -3,10 +3,27 @@
 This repository contains the source code for a financial dashboard application built with Next.js. The application provides features for managing invoices and requires authentication for accessing the dashboard pages.
 
 ## Login
-- <a href="https://next-invoices-gilt.vercel.app" target="_blank">App link</a>
+- Live view by clicking the badge: [![Static Badge](https://img.shields.io/badge/NextInvoice-blue)](https://next-invoices-gilt.vercel.app/)
 - use email: user@test.com
 - password : 123456
 - user can edit only
+
+## Demo
+
+Live view by clicking the badge: [![Static Badge](https://img.shields.io/badge/NextInvoice-blue)](https://next-invoices-gilt.vercel.app/)
+
+
+You can also clone the project and open it in localhost, or enjoy the preview
+video below instead :smile:
+
+
+
+https://github.com/Mbalhakim/NextInvoices/assets/57827232/5fbf5de4-96fb-4bc5-9d5e-d35740ccd7e8
+
+
+
+
+  
 ## Features
 
 - **Public Home Page:** Landing page accessible to all users.
