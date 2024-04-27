@@ -2,6 +2,10 @@
 
 This repository contains the source code for a financial dashboard application built with Next.js. The application provides features for managing invoices and requires authentication for accessing the dashboard pages.
 
+## Login
+-- use email: user@test.com
+-- password : 123456
+-- user can edit only
 ## Features
 
 - **Public Home Page:** Landing page accessible to all users.
