@@ -47,13 +47,10 @@ export async function createUser(prevState: State, formData: FormData) {
   }
 }
 
-
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData,
-) {
+export async function authenticate(prevState: string | undefined, formData: FormData) {
   try {
     await signIn('credentials', formData);
+
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -66,6 +63,7 @@ export async function authenticate(
     throw error;
   }
 }
+
 
 
 

@@ -8,30 +8,30 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const userEmail = "user@test.com"
-      // Check if the user is logged in and has the specified user ID
-      const isSpecificUser = auth?.user?.email === userEmail;
-    
-      // Check if the user is trying to visit certain links
-      const isOnCreateInvoice = nextUrl.pathname.startsWith('/dashboard/invoices/create');
-      const isOnCreateUser = nextUrl.pathname.startsWith('/dashboard/create');
-    
-      if (isSpecificUser && (isOnCreateInvoice || isOnCreateUser)) {
-        return Response.redirect(new URL('/dashboard', nextUrl)); // Redirect to the dashboard
-      }
-    
-      // Check if the user is on the dashboard
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-    
+      const isOnCreate = nextUrl.pathname.startsWith('/create');
+
+
+
+
       if (isOnDashboard) {
-        if (isLoggedIn) return true; // Allow authenticated users to access the dashboard
-        return false; // Redirect unauthenticated users to the login page
+        if (isOnDashboard && isLoggedIn) return true;
+        return false; // Redirect unauthenticated users to login page
+      } 
+      
+      else if (isOnCreate) {
+        if(isLoggedIn && auth?.user?.email != "user@test.com"){
+          return true
+        } return Response.redirect(new URL('/dashboard', nextUrl));
+
       }
-    
+      
+      else if (isLoggedIn) {
+        return Response.redirect(new URL('/dashboard', nextUrl));
+      }
       return true;
     },
-    
   },
-  providers: [], 
+  providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;
 
